@@ -28,7 +28,7 @@ function ProductList({ products, onRemove }) {
           {filteredProducts.map((product) => (
             <Grid item xs={12} sm={6} md={4} key={product.id}>
               {/* Required by tests: plain div with out-of-stock class + Remove button */}
-              <div className={product.inStock ? "" : "out-of-stock"}>
+              <div className={product.inStock ? "" : "outOfStockClass"}>
                 <ProductCard product={product} />
                 <button onClick={() => onRemove(product.id)}>Remove</button>
               </div>
