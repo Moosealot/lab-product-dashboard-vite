@@ -1,25 +1,17 @@
 import React from "react";
-
 import styles from "../styles/ProductCard.module.css";
+import { CardContent, Typography, Button } from "@mui/material";
 
-import { Card, CardContent, Typography, Button } from "@mui/material";
-
-function ProductCard({ product }) {
+function ProductCard({ product, onRemove }) {
   return (
-    <Card
-      className={
-        product.inStock ? styles.card : styles.outOfStockCard
-      }
-    >
+    <div className={`${product.inStock ? styles.card : styles.outOfStockCard} ${product.inStock ? "" : "outOfStockClass"}`}>
       <CardContent>
         <Typography variant="h5" gutterBottom>
           {product.name}
         </Typography>
-
         <Typography variant="body1">
           Price: ${product.price}
         </Typography>
-
         <Typography
           variant="body2"
           color={product.inStock ? "green" : "red"}
@@ -27,7 +19,6 @@ function ProductCard({ product }) {
         >
           {product.inStock ? "In Stock" : "Out of Stock"}
         </Typography>
-
         <Button
           variant="contained"
           color={product.inStock ? "primary" : "error"}
@@ -36,8 +27,9 @@ function ProductCard({ product }) {
         >
           {product.inStock ? "Buy Now" : "Unavailable"}
         </Button>
+        <button onClick={() => onRemove(product.id)}>Remove</button>
       </CardContent>
-    </Card>
+    </div>
   );
 }
 
