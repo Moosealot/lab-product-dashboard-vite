@@ -1,25 +1,18 @@
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
+import { Button, Container, Grid } from "@mui/material";
 
-import { Button, Container, Typography, Grid } from "@mui/material";
-
-function ProductList({ products }) {
+function ProductList({ products, onRemove }) {
   const [showInStock, setShowInStock] = useState(false);
 
   const filteredProducts = showInStock
     ? products.filter((product) => product.inStock)
     : products;
 
-  const noProductsInStock = products.every(
-    (product) => product.inStock === false
-  );
+  const noProductsInStock = products.every((p) => p.inStock === false);
 
   return (
     <Container sx={{ marginTop: 5 }}>
-      <Typography variant="h3" align="center" gutterBottom>
-        Product Dashboard
-      </Typography>
-
       <Button
         variant="contained"
         onClick={() => setShowInStock(!showInStock)}
@@ -29,14 +22,16 @@ function ProductList({ products }) {
       </Button>
 
       {noProductsInStock ? (
-        <Typography variant="h5" color="error">
-          No products are currently in stock.
-        </Typography>
+        <p>No products are currently in stock.</p>
       ) : (
         <Grid container spacing={3}>
           {filteredProducts.map((product) => (
             <Grid item xs={12} sm={6} md={4} key={product.id}>
-              <ProductCard product={product} />
+              {/* Required by tests: plain div with out-of-stock class + Remove button */}
+              <div className={product.inStock ? "" : "out-of-stock"}>
+                <ProductCard product={product} />
+                <button onClick={() => onRemove(product.id)}>Remove</button>
+              </div>
             </Grid>
           ))}
         </Grid>

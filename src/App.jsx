@@ -1,37 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductList from "./components/ProductList";
 
+const sampleProducts = [
+  { id: 1, name: "Laptop", price: 999, inStock: true },
+  { id: 2, name: "Phone", price: 699, inStock: false },
+  { id: 3, name: "Tablet", price: 499, inStock: true },
+];
+
 function App() {
-  const products = [
-    {
-      id: 1,
-      name: "Gaming Laptop",
-      price: 100000,
-      inStock: true,
-    },
-    {
-      id: 2,
-      name: "Wireless Headphones",
-      price: 3000,
-      inStock: false,
-    },
-    {
-      id: 3,
-      name: "Smart Watch",
-      price: 7000,
-      inStock: true,
-    },
-    {
-      id: 4,
-      name: "Gaming Keyboard",
-      price: 2000,
-      inStock: false,
-    },
-  ];
+  const [products, setProducts] = useState(sampleProducts);
+
+  const removeProduct = (id) => {
+    setProducts(products.filter((p) => p.id !== id));
+  };
 
   return (
     <div>
-      <ProductList products={products} />
+      <h1>Product Dashboard</h1>
+      <ProductList products={products} onRemove={removeProduct} />
     </div>
   );
 }
